@@ -1,4 +1,4 @@
-package com.company;
+package com.company.Domain;
 
 import java.util.Date;
 
@@ -35,19 +35,5 @@ public class Vehicle {
         return vehicle_name;
     }
 
-    public void setSign(String sign) {
-        Sign = sign;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setValid(boolean valid) {
-        isValid = valid;
-    }
-
-    public void setVehicle_name(String vehicle_name) {
-        this.vehicle_name = vehicle_name;
-    }
 }

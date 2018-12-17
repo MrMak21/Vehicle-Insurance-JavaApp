@@ -1,11 +1,14 @@
-package com.company;
+package com.company.DataBase;
 
+
+import com.company.Domain.Person;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
 
 import java.sql.*;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 public class DbConn {
 
@@ -20,7 +23,7 @@ public class DbConn {
 
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/assigment?useSSL=false", "root", "panosaek1997");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_future?useSSL=false", "root", "panosaek1997");
             stmt = conn.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,7 +36,7 @@ public class DbConn {
 
 
             try {
-                rs = stmt.executeQuery("SELECT * FROM assigment.eforia2 WHERE Sign = '"+inp+"'");
+                rs = stmt.executeQuery("SELECT * FROM car_data WHERE Sign = '"+inp+"'");
                 if (!rs.isBeforeFirst()){
                     System.out.println("Sorry there is no car with this sign..");
                 }
@@ -76,7 +79,7 @@ public class DbConn {
 
 
             try {
-                rs = stmt.executeQuery("SELECT * FROM assigment.eforia2 WHERE Date BETWEEN '"+timenow2+"' AND '"+output+"'");
+                rs = stmt.executeQuery("SELECT * FROM car_data WHERE Date BETWEEN '"+timenow2+"' AND '"+output+"'");
                 if (!rs.isBeforeFirst()){
                     System.out.println("Sorry there is no car with this sign..");
                 }
@@ -113,7 +116,7 @@ public class DbConn {
 
 
         try {
-            rs = stmt.executeQuery("SELECT * FROM assigment.eforia2");
+            rs = stmt.executeQuery("SELECT * FROM car_data");
 
             while(rs.next()){
                 names.add(rs.getString("Name"));
@@ -171,6 +174,55 @@ public class DbConn {
             }
 
 
+
+
+        }
+
+        public void f4(){
+
+            //List making
+            List<String> names = new ArrayList<String>();
+            List<String> sign = new ArrayList<String>();
+            List<String> isValid = new ArrayList<String>();
+            List<String> date = new ArrayList<String>();
+            List<String> vehicle = new ArrayList<String>();
+
+            Map m1 = new HashMap();
+
+
+            try {
+                rs = stmt.executeQuery("SELECT * FROM car_data");
+
+                while(rs.next()){
+                    names.add(rs.getString("Name"));
+                    sign.add(rs.getString("Sign"));
+                    date.add(rs.getString("Date"));
+                    isValid.add(rs.getString("isValid"));
+                    vehicle.add(rs.getString("Vehicle"));
+                }
+
+            }catch(SQLException e) {
+                e.printStackTrace();
+            }
+
+
+
+            for(int i = 0; i < names.size()-1;i++){
+                boolean flag = false;
+                for(int j=i+1;j<names.size();j++){
+                    if (i != j){
+                        if(names.get(j).equals(names.get(i))){
+                            if (flag == false) {
+                                System.out.println(names.get(i));
+                            }
+                            flag = true;
+                            if (flag == true){
+                                System.out.println(sign.get(j)+"\n"+sign.get(i));
+                            }
+                        }
+                    }
+                }
+            }
 
 
         }
